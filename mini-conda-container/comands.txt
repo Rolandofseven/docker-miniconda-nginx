@@ -1,0 +1,21 @@
+docker run --name=conda-serve -d -p=5000:5000 --mount source=shared-vol,target=/condarepo/stable rpiggott/conda-serve
+
+docker volume create shared-vol
+
+docker rm -f conda-serve
+
+docker build . -t rpiggott/conda-serve
+
+docker run --name=nginx-server -d -p=8080:80 --mount type=bind,source=c:\dev\docker\bindmountdir,target=/condarepo/stable rpiggott/nginx-server
+
+docker run -it --name=foo --mount type=bind,source=c:\dev\docker\bindmountdir,target=/src/mountdir ubuntu bash
+
+
+
+--Working Dockers
+-----------------
+docker build . -t rpiggott/nginx-serve
+docker run --name=nginx-server -d -p=8080:80 -v c:\dev\docker\bindmountdir:/usr/share/nginx/html/condarepo/stable rpiggott/nginx-server
+
+docker build . -t rpiggott/conda-serve
+docker run --name=conda-serve2 -d -p=5000:5000 -v c:\dev\docker\bindmountdir:/condarepo/stable rpiggott/conda-serve
